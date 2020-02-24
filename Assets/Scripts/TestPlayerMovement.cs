@@ -20,8 +20,12 @@ public class TestPlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 cameraVector = new Vector3(TestPlayer.transform.position.x, Camera.main.transform.position.y, TestPlayer.transform.position.z);
-        Camera.main.transform.position = cameraVector;
+        if (Input.GetKey(KeyCode.C))
+        {
+            Vector3 cameraVector = new Vector3(TestPlayer.transform.position.x, Camera.main.transform.position.y, TestPlayer.transform.position.z);
+            Camera.main.transform.position = cameraVector;
+        }
+
         if (Input.GetMouseButtonDown(1))
         {
             moveToRay = Camera.main.ScreenPointToRay(Input.mousePosition);
