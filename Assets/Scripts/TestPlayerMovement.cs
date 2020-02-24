@@ -1,18 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TestPlayerMovement : MonoBehaviour
 {
-    public GameObject TestPlayer = new GameObject();
-
-    // Current positions
-    public Vector3 currentPosition;
-    public Vector3 currentRotation;
-
-    // Desired positions
-    public Vector3 targetPosition;
-    public Vector3 targetRotation;
+    public LayerMask ground;
+    public NavMeshAgent TestPlayer;
 
     // Ray cast from camera center until it collides with ground
     public Ray moveToRay;
@@ -20,17 +14,21 @@ public class TestPlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        TestPlayer = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        moveToRay.origin = Camera.main.transform.position;
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetMouseButtonDown(0))
         {
-            TestPlayer.transform.rotation = Quaternion.Euler(0, Mathf.Atan(Input.mousePosition.x / Input.mousePosition.z), 0);
-            Debug.Log(Input.mousePosition);
+            moveToRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+
+            if(Physics.Raycast(moveToRay, out hitInfo, 100, ground))
+            {
+                TestPlayer.SetDestination(hitInfo.point);
+            }
         }
     }
 }
