@@ -5,10 +5,12 @@ using UnityEngine.AI;
 
 public class TestPlayerMovement : MonoBehaviour
 {
+    // Used for NavMesh as "Allow walk"
     public LayerMask ground;
+    // Used as NavvMesh-agent
     public NavMeshAgent TestPlayer;
 
-    // Ray cast from camera center until it collides with ground
+    // Ray cast from camera center until it collides with ground, pointing at a direction to move towards.
     public Ray moveToRay;
 
     // Start is called before the first frame update
@@ -20,12 +22,15 @@ public class TestPlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If you hold down c
         if (Input.GetKey(KeyCode.C))
         {
+            // Sets cameraVector to player position, but the vertical position remains.
             Vector3 cameraVector = new Vector3(TestPlayer.transform.position.x, Camera.main.transform.position.y, TestPlayer.transform.position.z);
             Camera.main.transform.position = cameraVector;
         }
 
+        // If you right-click
         if (Input.GetMouseButtonDown(1))
         {
             moveToRay = Camera.main.ScreenPointToRay(Input.mousePosition);
