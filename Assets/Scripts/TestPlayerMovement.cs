@@ -22,12 +22,18 @@ public class TestPlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // If you hold down c
+        // If you hold down c, follow player
         if (Input.GetKey(KeyCode.C))
         {
             // Sets cameraVector to player position, but the vertical position remains.
             Vector3 cameraVector = new Vector3(TestPlayer.transform.position.x, Camera.main.transform.position.y, TestPlayer.transform.position.z);
             Camera.main.transform.position = cameraVector;
+        }
+
+        // If you press S or H. Stop player from moving.
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            TestPlayer.ResetPath();
         }
 
         // If you right-click
@@ -38,6 +44,7 @@ public class TestPlayerMovement : MonoBehaviour
 
             if(Physics.Raycast(moveToRay, out hitInfo, 100, ground))
             {
+                TestPlayer.angularSpeed = 150000 * Time.deltaTime;
                 TestPlayer.SetDestination(hitInfo.point);
             }
         }
