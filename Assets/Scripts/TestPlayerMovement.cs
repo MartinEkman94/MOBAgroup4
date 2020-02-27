@@ -17,6 +17,7 @@ public class TestPlayerMovement : MonoBehaviour
     void Start()
     {
         TestPlayer = GetComponent<NavMeshAgent>();
+        Camera.main.transform.position = new Vector3(TestPlayer.transform.position.x, Camera.main.transform.position.y, TestPlayer.transform.position.z - 5);
     }
 
     // Update is called once per frame
@@ -26,7 +27,7 @@ public class TestPlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.C))
         {
             // Sets cameraVector to player position, but the vertical position remains.
-            Vector3 cameraVector = new Vector3(TestPlayer.transform.position.x, Camera.main.transform.position.y, TestPlayer.transform.position.z);
+            Vector3 cameraVector = new Vector3(TestPlayer.transform.position.x, Camera.main.transform.position.y, TestPlayer.transform.position.z - 5);
             Camera.main.transform.position = cameraVector;
         }
 
@@ -42,7 +43,7 @@ public class TestPlayerMovement : MonoBehaviour
             moveToRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
 
-            if(Physics.Raycast(moveToRay, out hitInfo, 100, ground))
+            if(Physics.Raycast(moveToRay, out hitInfo, 10000, ground))
             {
                 TestPlayer.angularSpeed = 150000 * Time.deltaTime;
                 TestPlayer.SetDestination(hitInfo.point);
